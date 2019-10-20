@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="alarmViewModel"
+            type="com.shanemaglangit.wakemeup.alarm.AlarmViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".alarm.AlarmFragment">
+
+        <TextView
+            android:id="@+id/text_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_start"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/time_start"
+            app:layout_constraintStart_toStartOf="@+id/time_start" />
+
+        <TimePicker
+            android:id="@+id/time_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:timePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_end"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/time_end"
+            app:layout_constraintStart_toStartOf="@+id/time_end" />
+
+        <TimePicker
+            android:id="@+id/time_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:timePickerMode="spinner"
+            app:layout_constraintEnd_toEndOf="@+id/time_start"
+            app:layout_constraintStart_toStartOf="@+id/time_start"
+            app:layout_constraintTop_toBottomOf="@+id/time_start" />
+
+        <TextView
+            android:id="@+id/text_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@{alarmViewModel.interval.toString()}"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/seekbar_interval"
+            app:layout_constraintEnd_toStartOf="@+id/text_minutes"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/time_end"
+            app:layout_constraintTop_toBottomOf="@+id/time_end" />
+
+        <TextView
+            android:id="@+id/text_minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_minutes"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/text_interval_desc"
+            app:layout_constraintEnd_toEndOf="@+id/time_end"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/text_interval"
+            app:layout_constraintTop_toTopOf="@+id/text_interval" />
+
+        <TextView
+            android:id="@+id/text_interval_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_interval_desc"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_interval"
+            app:layout_constraintEnd_toEndOf="@+id/text_minutes"
+            app:layout_constraintStart_toEndOf="@+id/text_minutes"
+            app:layout_constraintTop_toBottomOf="@+id/text_minutes" />
+
+        <SeekBar
+            android:id="@+id/seekbar_interval"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:max="11"
+            android:progress="0"
+            app:layout_constraintEnd_toEndOf="@+id/time_end"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/time_end"
+            app:layout_constraintTop_toBottomOf="@+id/time_end" />
+
+        <Button
+            android:id="@+id/button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/button_save"
+            android:onClick="@{() -> alarmViewModel.submitAlarm()}"
+            app:layout_constraintEnd_toEndOf="@+id/seekbar_interval"
+            app:layout_constraintStart_toStartOf="@+id/seekbar_interval"
+            app:layout_constraintTop_toBottomOf="@+id/seekbar_interval" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

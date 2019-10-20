@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WakeMeUp</string>
+
+    <string name="text_start">Start of Alarm</string>
+    <string name="text_end">End of Alarm</string>
+    <string name="text_minutes">Minutes</string>
+    <string name="text_interval_desc">interval between alarms</string>
+    <string name="button_save">Save</string>
+</resources>
