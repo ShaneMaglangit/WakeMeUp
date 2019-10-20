@@ -9,8 +9,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // TODO: Access the native alarm API to set up the alarm.
-        // TODO: Store the created alarms.
+        // TODO: Hide soft keyboard.
+        // TODO: Show a dialog confirmation box.
+        // TODO: If possible -> cancel toast created by the native alarm clock.
+        // TODO: Create a list to show all of the alarms created.
         // TODO: Create an about fragment.
         // TODO: Create an button to show more options.
         // TODO: Test the app.
