@@ -10,6 +10,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".alarm.AlarmFragment">
@@ -107,8 +108,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
-            android:text="@string/button_save"
+            android:layout_marginBottom="8dp"
             android:onClick="@{() -> alarmViewModel.submitAlarm()}"
+            android:text="@string/button_save"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/seekbar_interval"
             app:layout_constraintStart_toStartOf="@+id/seekbar_interval"
             app:layout_constraintTop_toBottomOf="@+id/seekbar_interval" />
