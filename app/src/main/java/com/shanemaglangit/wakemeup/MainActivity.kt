@@ -12,7 +12,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // TODO: Handle alarm that ranges from intersect between midnight.
         // TODO: If possible -> cancel toast created by the native alarm clock.
         // TODO: Create a list to show all of the alarms created.
         // TODO: Create an about fragment.

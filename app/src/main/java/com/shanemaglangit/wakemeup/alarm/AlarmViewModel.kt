@@ -7,10 +7,7 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.*
 
 class AlarmViewModel : ViewModel() {
@@ -39,29 +36,42 @@ class AlarmViewModel : ViewModel() {
             val currentTimeInMinutes =
                 (calendar.get(Calendar.HOUR_OF_DAY) * 60) + calendar.get(Calendar.MINUTE)
 
-            if(currentTimeInMinutes in startTimeInMinutes..endTimeInMinutes) {
+            if(currentTimeInMinutes in (startTimeInMinutes + 1)..endTimeInMinutes) {
                 Toast.makeText(context, "You can only set alarms that triggers within 24 hours ", Toast.LENGTH_SHORT).show()
+                _saveAlarm.value = false
             } else {
-                var minutes = startTimeInMinutes
-                var passesMidnight = startTimeInMinutes > endTimeInMinutes
+                _saveAlarm.value =
+                    createAlarm(context, startTimeInMinutes, endTimeInMinutes, interval.value!!)
+            }
+        }
+    }
 
-                while(minutes <= endTimeInMinutes || passesMidnight) {
-                    if(minutes > 1440) {
-                        minutes = 0
-                        passesMidnight = false
-                    }
+    private suspend fun createAlarm(
+        context: Context,
+        startTimeInMinutes: Int,
+        endTimeInMinutes: Int,
+        interval: Int
+    ) : Boolean {
+        return withContext(Dispatchers.IO) {
+            var minutes = startTimeInMinutes
+            var passesMidnight = startTimeInMinutes > endTimeInMinutes
 
-                    val intent = Intent(AlarmClock.ACTION_SET_ALARM)
-                    intent.putExtra(AlarmClock.EXTRA_SKIP_UI, true)
-                    intent.putExtra(AlarmClock.EXTRA_HOUR, minutes / 60)
-                    intent.putExtra(AlarmClock.EXTRA_MINUTES, minutes % 60)
-                    context.startActivity(intent)
-
-                    minutes += interval.value!!
+            while(minutes <= endTimeInMinutes || passesMidnight) {
+                if(minutes > 1440) {
+                    minutes = 0
+                    passesMidnight = false
                 }
+
+                val intent = Intent(AlarmClock.ACTION_SET_ALARM)
+                intent.putExtra(AlarmClock.EXTRA_SKIP_UI, true)
+                intent.putExtra(AlarmClock.EXTRA_HOUR, minutes / 60)
+                intent.putExtra(AlarmClock.EXTRA_MINUTES, minutes % 60)
+                context.startActivity(intent)
+
+                minutes += interval
             }
 
-            _saveAlarm.value = false
+            false
         }
     }
 
